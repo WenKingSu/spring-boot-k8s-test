@@ -1,0 +1,19 @@
+spring:
+    application:
+        name: k8s-test-services
+    cloud:
+        kubernetes:
+            discovery:
+                all-namespaces: true
+            reload:
+                enabled: true
+                mode: polling
+                period: 5000
+                strategy: refresh
+                monitoring-secrets: true
+            config:
+                enabled: true
+                enableApi: true
+                sources:
+                    -   namespace: default
+                        name: application-config

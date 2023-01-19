@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: k8s-test-service
+    namespace: default
+spec:
+    selector:
+        app: k8s-test-deployment
+    type: NodePort
+    ports:
+        - name: server
+          nodePort: 31001
+          port: 8080
+          targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: k8s-test-deployment
+    namespace: default
+    labels:
+        app: k8s-test-deployment
+spec:
+    replicas: 1
+    template:
+        metadata:
+            name: k8s-test-deployment
+            labels:
+                app: k8s-test-deployment
+        spec:
+            serviceAccountName: api-reader
+            containers:
+                -   name: k8s-test-deployment
+                    image: 192.168.5.240/library/k8s-test:1.0.0
+                    imagePullPolicy: Always
+                    ports:
+                        - containerPort: 8080
+                          name: server
+            restartPolicy: Always
+    selector:
+        matchLabels:
+            app: k8s-test-deployment
