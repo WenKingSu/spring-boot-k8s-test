@@ -31,7 +31,7 @@ spec:
             serviceAccountName: api-reader
             containers:
                 -   name: k8s-test-deployment
-                    image: 192.168.5.240/library/k8s-test:1.0.0
+                    image: [harbor server]/library/k8s-test:1.0.0
                     imagePullPolicy: Always
                     ports:
                         - containerPort: 8080
